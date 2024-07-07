@@ -1,5 +1,15 @@
-import "@/styles/globals.css";
+// pages/_app.js
+import * as React from "react";
+import { ThemeProvider } from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
+import theme from "../styles/theme"; // Adjust the path as necessary
+import "../styles/globals.css";
 
 export default function App({ Component, pageProps }) {
-  return <Component {...pageProps} />;
+  return (
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <Component {...pageProps} />
+    </ThemeProvider>
+  );
 }
