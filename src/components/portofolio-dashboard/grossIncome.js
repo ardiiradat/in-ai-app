@@ -12,6 +12,7 @@ import { useTheme } from "@mui/material/styles";
 import {
   IconChevronRight,
   IconDotsVertical,
+  IconTrendingDown,
   IconTrendingUp,
 } from "@tabler/icons-react";
 import { usePortoState } from "../../state/usePortoState";
@@ -169,7 +170,10 @@ const GrossIncome = ({ isMobile, isDesktop }) => {
                 {grossAssets}
               </Typography>
               <Stack
-                sx={{ mb: 1, mt: isMobile ? 0 : 3 }}
+                sx={{
+                  mb: 1,
+                  mt: isMobile ? 0 : 3,
+                }}
                 gap={1}
                 direction="row"
               >
@@ -180,12 +184,21 @@ const GrossIncome = ({ isMobile, isDesktop }) => {
                     lineHeight: "16px",
                     p: "4px 8px",
                     borderRadius: "50px",
-                    color: theme.palette.color.success[50],
+                    color: change.startsWith("-")
+                      ? theme.palette.color.destructive[50]
+                      : theme.palette.color.success[50],
                     alignItems: "center",
                     display: "flex",
                   }}
                 >
-                  <IconTrendingUp size={16} style={{ marginRight: "4px" }} />{" "}
+                  {change.startsWith("-") ? (
+                    <IconTrendingDown
+                      size={16}
+                      style={{ marginRight: "4px" }}
+                    />
+                  ) : (
+                    <IconTrendingUp size={16} style={{ marginRight: "4px" }} />
+                  )}{" "}
                   {change}
                   <span
                     style={{
