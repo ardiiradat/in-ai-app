@@ -66,11 +66,6 @@ Once the build is complete, you can start the production server with:
 ### State Management with Jotai
 This project uses Jotai for state management. Jotai provides a minimalistic and flexible way to manage state in React applications.
 
-### Additional Packages
-We also utilize the following packages:
-
-tablr: For enhanced table handling and display.
-
 ### Contributing
 If you would like to contribute to this project, please follow these steps:
 
