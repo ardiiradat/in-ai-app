@@ -9,18 +9,18 @@ import GrossIncome from "./grossIncome";
 import AiSection from "./aiSection";
 import BtnCustom from "./btnCustom";
 
-const TotalAssets = () => {
+const TotalAssets = ({ isMobile, isDesktop }) => {
   const theme = useTheme();
 
   return (
     <>
       <Box mt={2}>
-        <NetAssets />
-        <BtnEntity />
-        <PortoPerform />
-        <GrossIncome />
-        <AiSection />
-        <BtnCustom />
+        <NetAssets isMobile={isMobile} isDesktop={isDesktop} />
+        {isMobile && <BtnEntity isMobile={isMobile} />}
+        {isMobile && <PortoPerform isMobile={isMobile} />}
+        <GrossIncome isMobile={isMobile} isDesktop={isDesktop} />
+        <AiSection isMobile={isMobile} isDesktop={isDesktop} />
+        <BtnCustom isMobile={isMobile} />
       </Box>
     </>
   );

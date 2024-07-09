@@ -3,7 +3,7 @@ import { Button, Divider, Stack, Typography } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { IconAdjustmentsHorizontal, IconCloudUp } from "@tabler/icons-react";
 
-const BtnCustom = () => {
+const BtnCustom = ({ isMobile }) => {
   const theme = useTheme();
   const labels = [
     {
@@ -31,7 +31,8 @@ const BtnCustom = () => {
       <Stack
         gap={1}
         direction="row"
-        justifyContent="space-between"
+        justifyContent={isMobile ? "space-between" : "center"}
+        alignItems={isMobile ? "unset" : "center"}
         mt={2}
         mb={2}
         px={3.5}
@@ -42,8 +43,8 @@ const BtnCustom = () => {
             key={index}
             variant="contained"
             sx={{
-              width: "50%",
-              border: "1px solid",
+              width: isMobile ? "50%" : "20%",
+              border: isMobile ? "1px solid" : "none",
               background: theme.palette.color.gray[0],
               borderColor: theme.palette.color.gray[30],
               color: theme.palette.color.gray[60],
@@ -52,7 +53,8 @@ const BtnCustom = () => {
               borderRadius: "25px",
               padding: "10px 16px",
               "&:hover": {
-                bgcolor: theme.palette.color.gray[30],
+                bgcolor: theme.palette.color.gray[10],
+                boxShadow: "none",
               },
             }}
           >

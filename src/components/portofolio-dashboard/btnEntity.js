@@ -3,12 +3,17 @@ import { Button, Stack } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { IconCoins, IconBuildingCommunity } from "@tabler/icons-react";
 
-const BtnEntity = () => {
+const BtnEntity = ({ isMobile }) => {
   const theme = useTheme();
 
   return (
     <>
-      <Stack gap={1} direction="row" justifyContent="space-between" mt={2}>
+      <Stack
+        gap={1}
+        direction="row"
+        justifyContent="space-between"
+        mt={isMobile ? 2 : 0}
+      >
         <Button
           variant="contained"
           sx={{
@@ -16,9 +21,10 @@ const BtnEntity = () => {
             background: theme.palette.color.brand[60],
             textTransform: "unset",
             borderRadius: "25px",
-            padding: "10px 16px",
+            padding: isMobile ? "10px 16px" : "10px 36px",
             fontSize: "14px",
             fontWeight: "700",
+            whiteSpace: "nowrap",
             "&:hover": {
               bgcolor: theme.palette.color.brand[50],
             },
@@ -33,9 +39,10 @@ const BtnEntity = () => {
             width: "50%",
             textTransform: "unset",
             borderRadius: "25px",
-            padding: "10px 16px",
+            padding: isMobile ? "10px 16px" : "10px 36px",
             fontSize: "14px",
             fontWeight: "700",
+            whiteSpace: "nowrap",
             color: theme.palette.color.gray[60],
             borderColor: theme.palette.color.gray[60],
             "&:hover": {

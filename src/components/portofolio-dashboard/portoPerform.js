@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import { Box, Tabs, Tab, Typography, Grid, Stack } from "@mui/material";
-import { IconTrendingUp, IconTrendingDown } from "@tabler/icons-react"; // Make sure you import IconTrendingDown
+import { IconTrendingUp, IconTrendingDown } from "@tabler/icons-react";
 import { useTheme } from "@mui/material/styles";
+import { usePortoState } from "../../state/usePortoState";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -23,36 +24,21 @@ function TabPanel(props) {
   );
 }
 
-const dummyData = {
-  all: [
-    { period: "Month", amount: "401,321", percentage: "+0.5" },
-    { period: "Quarter", amount: "814,603", percentage: "+1.1" },
-    { period: "FY 2024", amount: "3,285,372", percentage: "+4.6" },
-  ],
-  realised: [
-    { period: "Month", amount: "200,000", percentage: "+0.3" },
-    { period: "Quarter", amount: "0", percentage: "0" },
-    { period: "FY 2024", amount: "1,500,000", percentage: "-2.5" },
-  ],
-  unrealised: [
-    { period: "Month", amount: "201,321", percentage: "+0.2" },
-    { period: "Quarter", amount: "414,603", percentage: "-0.3" },
-    { period: "FY 2024", amount: "1,785,372", percentage: "-2.1" },
-  ],
-};
-
 const tabsData = [
   { label: "All", key: "all" },
   { label: "Realised gains", key: "realised" },
   { label: "Unrealised gains", key: "unrealised" },
 ];
 
-const PortoPerform = () => {
+const PortoPerform = ({ isMobile }) => {
   const theme = useTheme();
-  const [value, setValue] = useState(0);
+  const { usePortoPerformTabValue, usePortoData } = usePortoState();
+  const [portoPerformTabValue, setPortoPerformTabValue] =
+    usePortoPerformTabValue();
+  const [portoData] = usePortoData();
 
   const handleChange = (event, newValue) => {
-    setValue(newValue);
+    setPortoPerformTabValue(newValue);
   };
 
   const renderData = (data) => (
@@ -123,58 +109,69 @@ const PortoPerform = () => {
 
   return (
     <>
-      <Typography
+      <Stack
+        direction="column"
+        mt={isMobile ? 0 : 2}
         sx={{
-          color: theme.palette.color.gray[60],
-          fontSize: "18px",
-          fontWeight: "700",
-          lineHeight: "24px",
-          mt: 3,
-          mb: 2,
-          pl: 1,
+          background: isMobile ? "unset" : theme.palette.color.gray[0],
+          borderRadius: "24px",
+          width: isMobile ? "100%" : "30%",
+          padding: isMobile ? 0 : "8px 24px",
         }}
       >
-        Portfolio performance
-      </Typography>
-      <Box sx={{ width: "100%", p: 0.5 }}>
-        <Tabs
-          value={value}
-          indicatorColor=""
-          onChange={handleChange}
-          aria-label="basic tabs example"
+        <Typography
           sx={{
-            ".MuiTab-root": {
-              textTransform: "none",
-              fontWeight: 600,
-            },
-            ".Mui-selected": {
-              backgroundColor: "#e0f7fa",
-              borderRadius: "25px",
-            },
+            color: theme.palette.color.gray[60],
+            fontSize: isMobile ? "18px" : "20px",
+            fontWeight: "700",
+            lineHeight: "24px",
+            mt: 3,
+            mb: 2,
+            pl: 1,
           }}
         >
+          Portfolio performance
+        </Typography>
+        <Box sx={{ width: "100%", p: 0.5 }}>
+          <Tabs
+            value={portoPerformTabValue}
+            indicatorColor=""
+            onChange={handleChange}
+            aria-label="basic tabs example"
+            sx={{
+              ".MuiTab-root": {
+                textTransform: "none",
+                fontWeight: 600,
+              },
+              ".Mui-selected": {
+                backgroundColor: "#e0f7fa",
+                borderRadius: "25px",
+              },
+            }}
+          >
+            {tabsData.map((tab, index) => (
+              <Tab
+                sx={{
+                  minWidth: "55px",
+                  minHeight: "36px",
+                  color: theme.palette.color.gray[60],
+                  fontWeight: "600",
+                  fontSize: "14px",
+                  lineHeight: "20px",
+                  padding: "4px 12px",
+                }}
+                key={tab.key}
+                label={tab.label}
+              />
+            ))}
+          </Tabs>
           {tabsData.map((tab, index) => (
-            <Tab
-              sx={{
-                minWidth: "55px",
-                minHeight: "36px",
-                color: theme.palette.color.gray[60],
-                fontWeight: "600",
-                fontSize: "14px",
-                lineHeight: "20px",
-                padding: "4px 12px",
-              }}
-              key={tab.key}
-              label={tab.label}
-            />
+            <TabPanel key={tab.key} value={portoPerformTabValue} index={index}>
+              {renderData(portoData)}
+            </TabPanel>
           ))}
-        </Tabs>
-        {tabsData.map((tab, index) => (
-          <TabPanel key={tab.key} value={value} index={index}>
-            {renderData(dummyData[tab.key])}
-          </TabPanel>
-        ))}
-      </Box>
+        </Box>
+      </Stack>
     </>
   );
 };

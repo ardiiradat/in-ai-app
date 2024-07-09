@@ -3,7 +3,7 @@ import { Button, Divider, Stack, Typography } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { IconWand } from "@tabler/icons-react";
 
-const AiSection = () => {
+const AiSection = ({ isMobile, isDesktop }) => {
   const theme = useTheme();
   const labels = [
     "Listed shares balances per  month?",
@@ -13,26 +13,48 @@ const AiSection = () => {
 
   return (
     <>
-      <Stack gap={1} direction="column" justifyContent="space-between" mt={2}>
+      {isDesktop && (
         <Typography
           sx={{
-            fontSize: "16px",
+            fontSize: "32px",
             fontWeight: 700,
             lineHeight: "22px",
             letterSpacing: "-0.007em",
-            mb: 1,
+            mt: 5,
+            mb: 4,
             ml: 0.5,
           }}
         >
           AI suggested queries
         </Typography>
+      )}
+      <Stack
+        gap={1}
+        direction={isMobile ? "column" : "row"}
+        justifyContent="space-between"
+        mt={2}
+      >
+        {isMobile && (
+          <Typography
+            sx={{
+              fontSize: "16px",
+              fontWeight: 700,
+              lineHeight: "22px",
+              letterSpacing: "-0.007em",
+              mb: 1,
+              ml: 0.5,
+            }}
+          >
+            AI suggested queries
+          </Typography>
+        )}
         {labels.map((label, index) => (
           <Button
             key={index}
             variant="contained"
             sx={{
               width: "100%",
-              border: "1px solid",
+              border: isMobile ? "1px solid" : "none",
               background: theme.palette.color.gray[0],
               borderColor: theme.palette.color.gray[30],
               color: theme.palette.color.gray[60],
@@ -44,7 +66,8 @@ const AiSection = () => {
               fontSize: "14px",
               fontWeight: "700",
               "&:hover": {
-                bgcolor: theme.palette.color.gray[30],
+                bgcolor: theme.palette.color.gray[10],
+                boxShadow: "none",
               },
             }}
           >
@@ -57,7 +80,7 @@ const AiSection = () => {
         sx={{
           border: "1px solid",
           borderColor: theme.palette.color.gray[30],
-          my: 2,
+          my: isMobile ? 2 : 4,
         }}
       />
     </>
